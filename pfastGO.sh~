@@ -52,6 +52,7 @@ cat "$temp"/*.faa.pfastgo_result.tab > "$output_path"/"$sample_id".pfastgo_resul
 
 echo $(date)" ::: pfastGO has finished the annotation"
 
+
 else
 
 echo " "
