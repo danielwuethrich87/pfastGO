@@ -41,7 +41,7 @@ echo $(date)" ::: Running pfam domain search"
 parallel -j "$cores" 'pfam_scan.pl -dir ~/Application/pfamscan/PfamScan/pfam_hmm/ -cpu 1 -as -fasta {1} > {1}.pfam.tsv' ::: "$temp"/*.faa
 
 echo $(date)" ::: Annotating sequences"
-parallel -j "$cores" 'python $pfastGO_location/script/parse_blast_sepperate.py {1} {1}.blast.tab {1}.pfam.tsv "$pfastGO_location"> {1}.pfastgo_result.tab' ::: "$temp"/*.faa
+parallel -j "$cores" 'python $pfastGO_location/script/parse_blast_sepperate.py {1} {1}.blast.tab {1}.pfam.tsv > {1}.pfastgo_result.tab' ::: "$temp"/*.faa
 
 mkdir -p "$output_path"
 

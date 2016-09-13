@@ -9,26 +9,24 @@ from sklearn.cluster import DBSCAN
 import re
 inputOptions = sys.argv[1:]
 
-# python parse_blast_sepperate.py ../test/longest_proteins.fasta ../test/blast/results/longest_proteins/longest_proteins_swissprot_blast.csv ../test/pfam_only/out.tsv script_position
+# python parse_blast_sepperate.py ../test/longest_proteins.fasta ../test/blast/results/longest_proteins/longest_proteins_swissprot_blast.csv ../test/pfam_only/out.tsv
 p_value=float("1e-6")
-
 
 def main():
 
-	#sys.stderr.write("pfastGO:Reading FASTA\n")
+
 	sequences={}
 	sequences=read_fasta(inputOptions[0])
-	#sys.stderr.write("pfastGO:Reading BLAST output\n")
+
 	sequences=read_blast(sequences,inputOptions[1]) # add first blast (swiss prot)
-	#sys.stderr.write("pfastGO:Reading PFAM output\n")
+
 	sequences=add_interpro_information(sequences,inputOptions[2])
-	#sys.stderr.write("pfastGO:Building GO graph\n")
+
 	sequences=add_full_path_to_protein(sequences)
 
-	#print "Locus id\tProkka\tUniprot homolog\tGOs\tmetacyc\tEC\tKegg"
 	for seq_id in sorted(sequences.keys()):
 		print seq_id+"\t"+sequences[seq_id].prokka_name+"\t"+sequences[seq_id].name+"\t"+sequences[seq_id].most_downstream_GO_string()+"\t"+sequences[seq_id].GO_string()+"\t"+sequences[seq_id].metacyc_string()+"\t"+sequences[seq_id].ec_string()+"\t"+sequences[seq_id].kegg_string()
-	#sys.stderr.write("pfastGO:Finished\n")
+
 
 
 def read_fasta(input_file):
@@ -76,7 +74,7 @@ def read_blast(sequences,input_file):
 
 	for seq_id in seq_id2blast_hits.keys():
 
-		blast_hits = sorted(seq_id2blast_hits[seq_id], key=lambda x: x.score, reverse=True)
+		blast_hits = sorted(seq_id2blast_hits[seq_id], key=lambda x: x.e_value, reverse=False)
 
 		sequences=assign_go_terms(blast_hits,seq_id,sequences)
 
@@ -205,7 +203,7 @@ def add_full_path_to_protein(sequences):
 
 def read_pfam2go():
 	pfam2go={}
-	input_file = [n for n in open(inputOptions[3]+'/script/pfam2go','r').read().replace("\r","").split("\n") if len(n)>0]
+	input_file = [n for n in open(sys.argv[0].rsplit('/', 2)[0]+'/script/pfam2go','r').read().replace("\r","").split("\n") if len(n)>0]
 	for line in input_file:
 		if line[0:1]!='!':
 			pfam_id=line.split('Pfam:')[1].split(' ')[0]
@@ -315,7 +313,7 @@ class Sequence:
 				for ec in go_graph.go_to_ec[GO_term]:
 					found_ecs.append(ec)
 
-		for ec in set(found_ecs)
+		for ec in set(found_ecs):
 			to_print+=", "+"EC:"+ec
 		if len(to_print)>0:
 			to_print=to_print[2:]
@@ -371,7 +369,7 @@ class GO_graph:
 	def __init__(self):
 		if len(GO_graph.ec_to_go.keys())==0:
 
-			obo_file = [n for n in open(inputOptions[3]+"/script/go.obo",'r').read().replace("\r","").split("\n") if len(n)>0]
+			obo_file = [n for n in open(sys.argv[0].rsplit('/', 2)[0]+"/script/go.obo",'r').read().replace("\r","").split("\n") if len(n)>0]
 
 			edges=list()
 			go_names={}
