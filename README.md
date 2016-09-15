@@ -26,9 +26,9 @@ Following software will be installed automatically with the script: install.sh<b
 
 #Installation:
 
-wget https://github.com/danielwuethrich87/pfastGO/archive/master.zip 
-unzip master.zip
-cd pfastGO-master
+wget https://github.com/danielwuethrich87/pfastGO/archive/master.zip<br />
+unzip master.zip<br />
+cd pfastGO-master<br />
 sh install.sh<br />
 
 #Usage:
