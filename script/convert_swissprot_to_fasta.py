@@ -14,8 +14,7 @@ inputOptions = sys.argv[1:]
 
 def main():
 
-
-
+	print "Reformating blast database ..."
 
 	info={}
 	info["sequence"]=""
@@ -42,12 +41,6 @@ def construct_fasta(line,info):
 			info["protein_name"]+=line.split("Full=")[1].split("{")[0].replace(";","")
 		if line.find("EC=")!=-1:
 			info["EC"]+=line.split("EC=")[1].split(" ")[0].split(";")[0]+";"
-
-	#removed since this is part of the name
-	#if line[0:10]=="GN   Name=": #or line[0:24]=="GN   OrderedLocusNames=":
-	#	to_remove_part=line.split("=")[1].split(";")[0].split(" {")[0]
-	#	to_remove_part=" "+to_remove_part[0:1].upper()+to_remove_part[1:]
-	#	info["protein_name"]=info["protein_name"].replace(to_remove_part,"")
 
 	if line[0:23]=="GN   OrderedLocusNames=":
 		to_remove_part=line.split("=")[1].split(";")[0].split(" {")[0]

@@ -13,27 +13,44 @@ export PATH=$PATH:"$pfastGO_location"/Software/parallel-20160822/src/
 export PATH=$PATH:"$pfastGO_location"/Software/PfamScan/
 export PATH=$PATH:"$pfastGO_location"/Software/hmmer-3.1b2-linux-intel-x86_64/src/
 
-is_command_installed () {
-if which $1 &>/dev/null; then
-    echo "$1 is installed in" $(which $1)
-else
-    echo "ERROR: $1 not found"
-fi
-}
 
 echo
 echo "Checking software ..."
 echo
 
+is_command_installed () {
+if which $1 &>/dev/null; then
+    echo "$1 is installed in:" $(which $1)
+else
+    echo
+    echo "ERROR: $1 not found."
+    echo
+    exit
+fi
+}
+
+if ! $(python -c "import networkx" &> /dev/null); then
+    echo
+    echo "ERROR: The python package networkx can not be loaded. Please install it." 
+    echo
+else
+    echo "The python package networkx is installed." 
+fi
+
+if ! $(python -c "import sklearn.cluster" &> /dev/null); then
+    echo
+    echo "ERROR: The python package sklearn.cluster can not be loaded. Please install it." 
+    echo
+else
+    echo "The python package sklearn.cluster is installed." 
+fi
+
 is_command_installed parallel
 is_command_installed blastp
-is_command_installed pfam_scan.pl
 is_command_installed python
 is_command_installed hmmsearch
+is_command_installed pfam_scan.pl
 
-if [ which parallel &>/dev/null ]&&[ which blastp &>/dev/null ]&&[ which pfam_scan.pl &>/dev/null ]&&[ which python &>/dev/null ]&&[ which hmmsearch &>/dev/null ];
-
-then
 
 if [ -r "$protein_file" ]&&[ -n "$sample_id" ]&&[ "$cores" -eq "$cores" ];
 
@@ -95,11 +112,5 @@ echo " "
 
 fi
 
-else
 
-echo
-echo "ERROR: Not all required softwre was found"
-echo
-
-fi
 
