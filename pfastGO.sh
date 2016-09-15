@@ -107,7 +107,7 @@ echo "  sh phastGo.sh <protein_file> <sample_id> <cores>"
 echo " "
 echo "  <protein_file>  multi fasta file that contains amino acid sequences of proteins (path)"
 echo "  <sample_id>     short identifier for a sample (string)"
-echo "  <cores>         Number cpus to run (int)"
+echo "  <cores>         number cpus to run (int)"
 echo " "
 
 fi

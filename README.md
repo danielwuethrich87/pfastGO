@@ -11,7 +11,7 @@ As input a multi fasta file (.faa file) with the amino acid sequences  is needed
 
 #Requirements:
 
-Linux 64 bit system<br />
+-Linux 64 bit system<br />
 
 -python (version 2.7)<br />
 -python package:NetworkX (available https://networkx.github.io/)<br />
@@ -28,9 +28,9 @@ Following software will be installed automatically with the script: install.sh<b
 sh install.sh<br />
 
 #Usage: 
-sh phastGo.sh "protein_file" "sample_id" "cores"<br />
+sh phastGo.sh protein_file sample_id cores<br />
  
-"protein_file": multi fasta file that contains amino acid sequences of proteins (path)<br />
-"sample_id": short identifier for a sample (string)<br />
-"cores": Number cpus to run (int)<br />
+protein_file: multi fasta file that contains amino acid sequences of proteins (path)<br />
+sample_id: short identifier for a sample (string)<br />
+cores: number cpus to run (int)<br />
 
