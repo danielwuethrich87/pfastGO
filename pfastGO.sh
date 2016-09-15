@@ -8,6 +8,11 @@ export temp="$working_dir"/temp/"$sample_id"
 export output_path="$working_dir"/results/"$sample_id"
 export pfastGO_location=$(dirname $0)
 
+export PATH=$PATH:"$pfastGO_location"/Software/ncbi-blast-2.2.31+/bin/
+export PATH=$PATH:"$pfastGO_location"/Software/parallel-20160822/src/
+export PATH=$PATH:"$pfastGO_location"/Software/PfamScan/
+export PATH=$PATH:"$pfastGO_location"/Software/hmmer-3.1b2-linux-intel-x86_64/src/
+
 if [ -r "$protein_file" ]&&[ -n "$sample_id" ]&&[ "$cores" -eq "$cores" ];
 
 then
@@ -35,10 +40,10 @@ END
 2>&1)
 
 echo $(date)" ::: Running Blast search"
-parallel -j "$cores" 'blastp -db /data5/users/dwuethrich/bacteria_swiss_prot_19_08_2016/format/blastdbs/uniprot_sprot_bacteria.fasta -num_threads 1 -query {1} -out {1}.blast.tab -outfmt "6 qseqid sseqid stitle qlen slen length pident nident mismatch gaps evalue bitscore" -max_target_seqs 250' ::: "$temp"/*.faa
+parallel -j "$cores" 'blastp -db $pfastGO_location/Software/databases/blast/uniprot_sprot_bacteria.fasta -num_threads 1 -query {1} -out {1}.blast.tab -outfmt "6 qseqid sseqid stitle qlen slen length pident nident mismatch gaps evalue bitscore" -max_target_seqs 250' ::: "$temp"/*.faa
 
 echo $(date)" ::: Running pfam domain search"
-parallel -j "$cores" 'pfam_scan.pl -dir ~/Application/pfamscan/PfamScan/pfam_hmm/ -cpu 1 -as -fasta {1} > {1}.pfam.tsv' ::: "$temp"/*.faa
+parallel -j "$cores" 'pfam_scan.pl -dir $pfastGO_location/Software/databases/pfam/ -cpu 1 -as -fasta {1} > {1}.pfam.tsv' ::: "$temp"/*.faa
 
 echo $(date)" ::: Annotating sequences"
 parallel -j "$cores" 'python $pfastGO_location/script/parse_blast_sepperate.py {1} {1}.blast.tab {1}.pfam.tsv > {1}.pfastgo_result.tab' ::: "$temp"/*.faa
