@@ -13,6 +13,28 @@ export PATH=$PATH:"$pfastGO_location"/Software/parallel-20160822/src/
 export PATH=$PATH:"$pfastGO_location"/Software/PfamScan/
 export PATH=$PATH:"$pfastGO_location"/Software/hmmer-3.1b2-linux-intel-x86_64/src/
 
+is_command_installed () {
+if which $1 &>/dev/null; then
+    echo "$1 is installed in" $(which $1)
+else
+    echo "ERROR: $1 not found"
+fi
+}
+
+echo
+echo "Checking software ..."
+echo
+
+is_command_installed parallel
+is_command_installed blastp
+is_command_installed pfam_scan.pl
+is_command_installed python
+is_command_installed hmmsearch
+
+if [ which parallel &>/dev/null ]&&[ which blastp &>/dev/null ]&&[ which pfam_scan.pl &>/dev/null ]&&[ which python &>/dev/null ]&&[ which hmmsearch &>/dev/null ];
+
+then
+
 if [ -r "$protein_file" ]&&[ -n "$sample_id" ]&&[ "$cores" -eq "$cores" ];
 
 then
@@ -60,7 +82,7 @@ echo $(date)" ::: pfastGO has finished the annotation"
 else
 
 echo " "
-echo "Incorrect input!"
+echo "ERROR: Incorrect input!"
 echo "pfastGO version 0.1 by Daniel Wüthrich (danielwue@hotmail.com)"
 echo " "
 echo "Usage: "
@@ -72,3 +94,12 @@ echo "  <cores>         Number cpus to run (int)"
 echo " "
 
 fi
+
+else
+
+echo
+echo "ERROR: Not all required softwre was found"
+echo
+
+fi
+
