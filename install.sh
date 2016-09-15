@@ -3,6 +3,7 @@ mkdir -p Software/databases/blast
 wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.2.31/ncbi-blast-2.2.31+-x64-linux.tar.gz -P Software
 tar xvzf Software/ncbi-blast-2.2.31+-x64-linux.tar.gz -C Software
 wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/taxonomic_divisions/uniprot_sprot_bacteria.dat.gz -P Software/databases/blast
+echo "Reformating blast database ..."
 python script/convert_swissprot_to_fasta.py Software/databases/blast/uniprot_sprot_bacteria.dat.gz  > Software/databases/blast/uniprot_sprot_bacteria.fasta
 Software/ncbi-blast-2.2.31+/bin/makeblastdb -parse_seqids -dbtype prot -in Software/databases/blast/uniprot_sprot_bacteria.fasta
 

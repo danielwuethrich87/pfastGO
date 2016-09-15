@@ -14,8 +14,6 @@ inputOptions = sys.argv[1:]
 
 def main():
 
-	print "Reformating blast database ..."
-
 	info={}
 	info["sequence"]=""
 	info["prot_ID"]=""
