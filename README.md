@@ -14,24 +14,23 @@ As input a multi fasta file (.faa file) with the amino acid sequences  is needed
 Linux 64 bit system<br />
 
 -python (version 2.7)<br />
--python packages:<br />
---NetworkX (available https://networkx.github.io/)<br />
---scikit-learn (available http://scikit-learn.org/stable/)<br />
+-python package:NetworkX (available https://networkx.github.io/)<br />
+-python package:scikit-learn (available http://scikit-learn.org/stable/)<br />
 
--GNU parallel"*" <br />
--blast+"*" <br />
--hmmsearch (version 3.1b2)"*" <br />
--pfam_scan"*" <br />
+Following software will be installed automatically with the script: install.sh<br />
 
-"*"software will be installed with the script: install.sh<br />
+-GNU parallel<br />
+-blast+<br />
+-hmmsearch (version 3.1b2)<br />
+-pfam_scan<br />
 
 #Installation: 
 sh install.sh<br />
 
 #Usage: 
-sh phastGo.sh <protein_file> <sample_id> <cores><br />
+sh phastGo.sh "protein_file" "sample_id" "cores"<br />
  
-  "<"protein_file">"	multi fasta file that contains amino acid sequences of proteins (path)<br />
-  "<"sample_id">"		short identifier for a sample (string)<br />
-  "<"cores">"		Number cpus to run (int)<br />
+"protein_file": multi fasta file that contains amino acid sequences of proteins (path)<br />
+"sample_id": short identifier for a sample (string)<br />
+"cores": Number cpus to run (int)<br />
 
