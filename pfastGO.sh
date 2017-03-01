@@ -8,10 +8,11 @@ export temp="$working_dir"/temp/"$sample_id"
 export output_path="$working_dir"/results/"$sample_id"
 export pfastGO_location=$(dirname $0)
 
-export PATH=$PATH:"$pfastGO_location"/Software/ncbi-blast-2.2.31+/bin/
-export PATH=$PATH:"$pfastGO_location"/Software/parallel-20160822/src/
-export PATH=$PATH:"$pfastGO_location"/Software/PfamScan/
-export PATH=$PATH:"$pfastGO_location"/Software/hmmer-3.1b2-linux-intel-x86_64/src/
+export PATH="$pfastGO_location"/Software/ncbi-blast-2.2.31+/bin:$PATH
+export PATH="$pfastGO_location"/Software/parallel-20160822/src:$PATH
+export PERL5LIB="$pfastGO_location"/Software/PfamScan:$PATH
+export PATH="$pfastGO_location"/Software/PfamScan:$PATH
+export PATH="$pfastGO_location"/Software/hmmer-3.1b2-linux-intel-x86_64/binaries:$PATH
 
 
 echo
