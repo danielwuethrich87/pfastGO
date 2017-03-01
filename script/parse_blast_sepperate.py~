@@ -417,7 +417,7 @@ class GO_graph:
 					alt_go=line[8:]
 					obsolete[alt_go]=go_term
 
-				if line[0:6]=="is_a: " or line[0:22]=="relationship: part_of ": # relationship: part_of was added because of methylation (see GO:0009008)
+				if line[0:6]=="is_a: " or line[0:22]=="relationship: part_of ": # elationship: part_of was added because of methylation (see GO:0009008)
 					edge=(go_term,line.split(" ")[1])
 					edges.append(edge)
 					for z in alt_ids:
