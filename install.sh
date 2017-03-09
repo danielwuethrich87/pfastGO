@@ -16,8 +16,14 @@ tar xvzf Software/PfamScan.tar.gz -C Software
 wget ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz -P Software/databases/pfam
 wget ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.dat.gz -P Software/databases/pfam
 wget ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/active_site.dat.gz -P Software/databases/pfam
+
 gunzip Software/databases/pfam/* 
 Software/hmmer-3.1b2-linux-intel-x86_64/binaries/hmmpress Software/databases/pfam/Pfam-A.hmm
+
+mkdir -p Software/databases/mapping
+
+wget http://geneontology.org/external2go/pfam2go -P Software/databases/mapping
+wget http://www.geneontology.org/ontology/go.obo -P Software/databases/mapping
 
 wget http://ftp.gnu.org/gnu/parallel/parallel-20160822.tar.bz2 -P Software
 tar -jxvf Software/parallel-20160822.tar.bz2 -C Software

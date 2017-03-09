@@ -145,8 +145,8 @@ def add_interpro_information(sequences,input_file):
 
 		sequences=alter_names_of_unknown(seq_id,sequences,seq_id2interpro)
 
-		#if sequences[seq_id].name.lower().find("transposase")!=-1: # add tranposase GO
-		#	sequences[seq_id].GO_terms.append("GO:0004803")		
+		if sequences[seq_id].name.lower().find("transposase")!=-1: # add tranposase GO
+			sequences[seq_id].GO_terms.append("GO:0004803")		
 		sequences[seq_id].GO_terms=list(set(sequences[seq_id].GO_terms)) # remove duplicate GO
 
 	return sequences
@@ -164,6 +164,15 @@ def alter_names_of_unknown(seq_id,sequences,seq_id2interpro):
 
 def read_interpro(input_file,sequences):
 
+	pfamID2name={}
+	pfamID2name_file=[n for n in open(sys.argv[0].rsplit('/', 2)[0]+"/Software/databases/pfam/Pfam-A.hmm.dat",'r').read().replace("\r","").split("\n") if len(n)>0]
+	for line in pfamID2name_file:
+		if line[0:7]=="#=GF AC":
+			pfamID=line[10:].split(".")[0]
+		if line[0:7]=="#=GF DE":
+			name=line[10:]
+			pfamID2name[pfamID]=name+" protein"
+
 	pfam2go=read_pfam2go()
 	seq_id2interpro={}
 	for seq_id in sequences.keys():
@@ -180,7 +189,7 @@ def read_interpro(input_file,sequences):
 			pfam_id=line.split("\t")[5].split(".")[0]
 			if (pfam_id in pfam2go.keys()) == bool(1):
 				interpro_result.GO_terms=pfam2go[pfam_id]
-			interpro_result.name=line.split("\t")[6]+" "+line.split("\t")[7]+" protein"
+			interpro_result.name=pfamID2name[pfam_id]#line.split("\t")[6]+" "+line.split("\t")[7]+" protein"
 			
 			if interpro_result.p_value<=p_value:
 				seq_id2interpro[seq_id].append(interpro_result)
@@ -202,7 +211,7 @@ def add_full_path_to_protein(sequences):
 
 def read_pfam2go():
 	pfam2go={}
-	input_file = [n for n in open(sys.argv[0].rsplit('/', 2)[0]+'/script/pfam2go','r').read().replace("\r","").split("\n") if len(n)>0]
+	input_file = [n for n in open(sys.argv[0].rsplit('/', 2)[0]+'/Software/databases/mapping/pfam2go','r').read().replace("\r","").split("\n") if len(n)>0]
 	for line in input_file:
 		if line[0:1]!='!':
 			pfam_id=line.split('Pfam:')[1].split(' ')[0]
@@ -368,7 +377,7 @@ class GO_graph:
 	def __init__(self):
 		if len(GO_graph.ec_to_go.keys())==0:
 
-			obo_file = [n for n in open(sys.argv[0].rsplit('/', 2)[0]+"/script/go.obo",'r').read().replace("\r","").split("\n") if len(n)>0]
+			obo_file = [n for n in open(sys.argv[0].rsplit('/', 2)[0]+"/Software/databases/mapping/go.obo",'r').read().replace("\r","").split("\n") if len(n)>0]
 
 			edges=list()
 			go_names={}
