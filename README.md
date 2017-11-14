@@ -33,7 +33,7 @@ sh install.sh<br />
 
 #Usage:
 
-sh phastGO.sh protein_file sample_id cores<br />
+sh pfastGO.sh protein_file sample_id cores<br />
  
 protein_file: multi fasta file that contains amino acid sequences of proteins (path)<br />
 sample_id: short identifier for a sample (string)<br />
